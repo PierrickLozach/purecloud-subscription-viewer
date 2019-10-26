@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Authorized Organizations</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="./index.css">
+</head>
+
+<body>
+    <div class="application-scroll billing-summary">
+        <div class="subscription-summary">
+            <div class="page-title">Billing & Usage</div>
+            <div class="top-bar">
+                <div class="item">
+                    <div class="form-group">
+                        <select class="month-selector" id="selectPeriod">
+                            <option selected value="0">Current Month</option>
+                            <option value="1">-1</option>
+                            <option value="2">-2</option>
+                            <option value="3">-3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="billing-summary-and-graph-container">
+                <div class="billing-summary-container">
+                    <div>
+                        <label><strong id="activeUsersCount"></strong></label>
+                        <label>Active Users</label>
+                    </div>
+                    <!-- <div>
+                            <small>Pre-Paid: <strong id="prePaidUsersCount"></strong> users & devices through <strong id="contractEndDate"></strong></small>
+                        </div> -->
+
+                    <table class="summary-price-table">
+                        <tr class="highlighted-row row">
+                            <td>Month Contract</td>
+                            <td>
+                                <span class="currency-number">
+                                    <span class="dollar-sign">R</span>
+                                    <span class="dollar-amount">0.00</span>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div>
+                        <label>Monthly Contracted</label>
+                        <label id="contractedAmount"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="users" class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <th>Users</th>
+                        <th>Qty</th>
+                        <th>Rate</th>
+                        <th>Total</th>
+                    </thead>
+                    <tbody id='usersTableBody'>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="apps" class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <th>Apps</th>
+                        <th>Qty</th>
+                        <th>Rate</th>
+                        <th>Total</th>
+                    </thead>
+                    <tbody id='appsTableBody'>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="resources" class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <th>Resources (excludes Cloud Voice charges)</th>
+                        <th>Qty</th>
+                        <th>Rate</th>
+                        <th>Total</th>
+                    </thead>
+                    <tbody id='resourcesTableBody'>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="storage" class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <th>Storage</th>
+                        <th>Qty</th>
+                        <th>Rate</th>
+                        <th>Total</th>
+                    </thead>
+                    <tbody id='storageTableBody'>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="https://sdk-cdn.mypurecloud.com/javascript/60.0.0/purecloud-platform-client-v2.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
+<script type="text/javascript" src="testData.js"></script>
+<script type="text/javascript">
+
+    const platformClient = require('platformClient');
+
+    const client = platformClient.ApiClient.instance;
+    client.setEnvironment('mypurecloud.ie');
+
+    const clientId = '1db38a1e-2398-4435-91f6-d51493e17e23';
+    const redirectUri = 'http://127.0.0.1:5500/index.html';
+    const state = 'CONNECTED';
+    const trustorOrgId = 'd3fc6ba5-80a5-45a9-b6f1-cf827445de08';
+    const billingPeriodIndex = 0; // Number | 0 for active period (overview data may change until period closes). 1 for prior completed billing period. 2 for two billing cycles prior, and so on.
+    const useTestData = true;
+
+    let apiInstance = new platformClient.BillingApi();
+    start();
+
+    function start() {
+        if (!useTestData) {
+            client.loginImplicitGrant(clientId, redirectUri, { state: state })
+                .then((data) => {
+                    console.log('Logged In!');
+
+                    let opts = {
+                        'billingPeriodIndex': $("#selectPeriod").val()
+                    };
+
+                    apiInstance.getBillingTrusteebillingoverviewTrustorOrgId(trustorOrgId, opts)
+                        .then((data) => {
+                            showData(data);
+                        })
+                        .catch((err) => {
+                            console.log('There was a failure calling getBillingTrusteebillingoverviewTrustorOrgId');
+                            console.error(err);
+                        });
+                })
+                .catch((err) => {
+                    // Handle failure response
+                    console.error(err);
+                    alert(err);
+                });
+        } else {
+            showData(testData);
+        }
+    }
+
+    function showData(data) {
+        console.log(`getBillingTrusteebillingoverviewTrustorOrgId success! data: ${JSON.stringify(data, null, 2)}`);
+
+        $("#activeUsersCount").text(sumProperty(data.usages, 'user-license', 'usageQuantity', true));
+        $("#prePaidUsersCount").text(sumProperty(data.usages, 'user-license', 'prepayQuantity', true));
+        $("#contractEndDate").text(moment(data.contractEndDate).utc().format('LL'));
+
+        $("#contractedAmount").text(sumProperty(data.usages, 'user-license', 'prepayQuantity', false));
+
+        // Users
+        let userUsage = data.usages.filter(usage => usage.grouping === 'user-license' && usage.prepayQuantity > 0);
+        $.each(userUsage, (i, usage) => {
+            console.log('Usage:', usage);
+            let tr = $("<tr/>", { rowspan: usage.grouping === 'user-license' ? 2 : 1 }).appendTo("#usersTableBody");
+            $("<td/>", {}).text(usage.name).appendTo(tr);
+            $("<td/>", {}).text(usage.usageQuantity).appendTo(tr);
+
+            if (usage.grouping === 'user-license') {
+                let subTr = $("<tr/>", {}).appendTo("#usersTableBody");
+                $("<td/>", { class: "small" }).text('- Contracted Seats').appendTo(subTr);
+                $("<td/>", { class: "small" }).text(usage.prepayQuantity).appendTo(subTr);
+                let overage = usage.usageQuantity - usage.prepayQuantity;
+                if (overage > 0) {
+                    let trOverage = $("<tr/>", {}).appendTo("#usersTableBody");
+                    $("<td/>", { class: "small" }).text('- Overage Seats').appendTo(trOverage);
+                    $("<td/>", { class: "small" }).text(overage).appendTo(trOverage);
+                }
+            }
+        });
+
+        // Apps
+        let appUsage = data.usages.filter(usage => usage.grouping === 'billable-app-org-license' && usage.usageQuantity > 0);
+        $.each(appUsage, (i, usage) => {
+            console.log('Usage:', usage);
+            let tr = $("<tr/>", { rowspan: usage.grouping === 'user-license' ? 2 : 1 }).appendTo("#appsTableBody");
+            $("<td/>", {}).text(usage.name).appendTo(tr);
+            $("<td/>", {}).text(usage.usageQuantity).appendTo(tr);
+
+            if (usage.grouping === 'user-license') {
+                let subTr = $("<tr/>", {}).appendTo("#appsTableBody");
+                $("<td/>", { class: "small" }).text('- Contracted Licenses').appendTo(subTr);
+                $("<td/>", { class: "small" }).text(usage.prepayQuantity).appendTo(subTr);
+                let overage = usage.usageQuantity - usage.prepayQuantity;
+                if (overage > 0) {
+                    let trOverage = $("<tr/>", {}).appendTo("#appsTableBody");
+                    $("<td/>", { class: "small" }).text('- Overage Licenses').appendTo(trOverage);
+                    $("<td/>", { class: "small" }).text(overage).appendTo(trOverage);
+                }
+            }
+        });
+
+        // Resources
+        let resourcesUsage = data.usages.filter(usage => usage.grouping === 'ivr' && usage.usageQuantity > 0);
+        $.each(resourcesUsage, (i, usage) => {
+            console.log('Usage:', usage);
+            let tr = $("<tr/>", { rowspan: usage.grouping === 'user-license' ? 2 : 1 }).appendTo("#resourcesTableBody");
+            $("<td/>", {}).text(usage.name).appendTo(tr);
+            $("<td/>", {}).text(usage.usageQuantity).appendTo(tr);
+
+            if (usage.grouping === 'user-license') {
+                let subTr = $("<tr/>", {}).appendTo("#resourcesTableBody");
+                $("<td/>", { class: "small" }).text('- Contracted Licenses').appendTo(subTr);
+                $("<td/>", { class: "small" }).text(usage.prepayQuantity).appendTo(subTr);
+                let overage = usage.usageQuantity - usage.prepayQuantity;
+                if (overage > 0) {
+                    let trOverage = $("<tr/>", {}).appendTo("#resourcesTableBody");
+                    $("<td/>", { class: "small" }).text('- Overage Licenses').appendTo(trOverage);
+                    $("<td/>", { class: "small" }).text(overage).appendTo(trOverage);
+                }
+            }
+        });
+
+        // Storage
+        let storageUsage = data.usages.filter(usage => usage.grouping === 'storage' && usage.usageQuantity > 0);
+        $.each(storageUsage, (i, usage) => {
+            console.log('Usage:', usage);
+            let tr = $("<tr/>", { rowspan: usage.grouping === 'storage' ? 2 : 1 }).appendTo("#storageTableBody");
+            $("<td/>", {}).text(usage.name).appendTo(tr);
+            $("<td/>", {}).text(usage.usageQuantity).appendTo(tr);
+
+            //TODO Add code to show storage details
+            // if (usage.grouping === 'storage') {
+            //     let subTr = $("<tr/>", {}).appendTo("#storageTableBody");
+            //     $("<td/>", { class: "small" }).text('- Contracted Licenses').appendTo(subTr);
+            //     $("<td/>", { class: "small" }).text(usage.prepayQuantity).appendTo(subTr);
+            //     let overage = usage.usageQuantity - usage.prepayQuantity;
+            //     if (overage > 0) {
+            //         let trOverage = $("<tr/>", {}).appendTo("#storageTableBody");
+            //         $("<td/>", { class: "small" }).text('- Overage Licenses').appendTo(trOverage);
+            //         $("<td/>", { class: "small" }).text(overage).appendTo(trOverage);
+            //     }
+            // }
+        });
+    }
+
+    function sumProperty(data, grouping, property, ignoreZeroUsageQuantity) {
+        let items = data.filter(item => ignoreZeroUsageQuantity ? item.grouping === grouping : item.group === grouping && item.usageQuantity > 0);
+        return items.reduce(function (a, b) {
+            return a + (b[property] ? parseInt(b[property]) : 0);
+        }, 0);
+    }
+
+    $("#selectPeriod").on('change', () => {
+        $("#usersTableBody").empty();
+        $("#appsTableBody").empty();
+        $("#resourcesTableBody").empty();
+        $("#storageTableBody").empty();
+
+        start();
+    });
+</script>
+
+</html>

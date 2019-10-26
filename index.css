@@ -1,0 +1,96 @@
+body {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    line-height: 1.42857143;
+}
+
+.application-scroll {
+    overflow-y: auto;
+    height: 100%;
+    width: calc(100% - 55px);
+    float: right;
+    transition: padding .3s;
+}
+
+.application-scroll[class*=billing-] .subscription-summary {
+    flex: 1;
+    color: #4c4c4c;
+    font-size: 13px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    overflow: auto;
+    padding: 0;
+    height: 100%;
+    background-color: #fff;
+}
+
+.application-scroll[class*=billing-] .subscription-summary .page-title {
+    height: 40px;
+    border-bottom: thin solid #cccccc;
+    padding-top: 10px;
+    padding-bottom: 0;
+    padding-left: 15px;
+    font-size: 16px;
+    background-color: #f2f3f7;
+    color: #443030;
+}
+
+.application-scroll[class*=billing-] .subscription-summary .top-bar {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    border-bottom: thin solid #cccccc;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 9px;
+    font-size: 13px;
+    background-color: #f2f3f7;
+    color: #443030;
+}
+
+.application-scroll[class*=billing-] .subscription-summary .billing-summary-and-graph-container {
+    display: flex;
+}
+
+.application-scroll[class*=billing-] .subscription-summary .billing-summary-container {
+    width: 100%;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.application-scroll[class*=billing-] .subscription-summary .heading {
+    font-size: 18px;
+}
+
+.item {
+    justify-content: space-around;
+    height: 100%;
+}
+
+.month-selector {
+    height: 39px;
+    border: 0;
+    /* border-bottom: thin solid #cccccc; */
+    padding-top: 10px;
+    padding-bottom: 0;
+    padding-left: 15px;
+    font-size: 16px;
+    background-color: #f2f3f7;
+    color: #443030;
+}
+
+
+
+.summary-price-table {
+    min-width: 60%;
+    margin-top: 20px;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.summary-price-table .row td {
+    padding-bottom: 5px;
+}
+
+td {
+    padding: 0;
+}
