@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Authorized Organizations</title>
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    -->
     <link rel="stylesheet" href="./index.css">
     <link href="//fonts.googleapis.com/css?family=Lato:300,400" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://dhqbrvplips7x.cloudfront.net/directory/9.18.0-5/assets/vendor-552b2cb90dee7571614445cb74a81c54.css">
@@ -23,19 +21,19 @@
                 <div class="top-bar">
                     <div class="item">
                         <div class="billing-period-selector">
-                            <div class="btn-group">
-                                <button type="button" data-toggle="dropdown" aria-expanded="false" class="btn btn-default dropdown-toggle">
-                                    <span>Current Month</span>
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu scrollable-menu">
-                                    <li>
-                                        <a href="javascript:void(0)">Previous Month</a>
-                                    </li>
-                                </ul>
+                            <div class="form-group">
+                                <select class="form-control btn-default" id="selectPeriod">
+                                    <option>0</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
                             </div>
                         </div>
                     </div>
+                    <small id="dateRange"></small>
                 </div>
                 <div class="billing-summary-and-graph-container">
                     <div class="billing-summary-container">
@@ -45,7 +43,6 @@
                                 <span>Active Users</span>
                                 <div class="subheading">Pre-Paid: <span id="prePaidUsersCount"></span> users &amp; devices through <span id="contractEndDate"></span></div>
                             </div>
-
                             <table class="summary-price-table">
                                 <tr class="highlighted-row row">
                                     <td>Monthly Contract</td>
@@ -67,7 +64,7 @@
                                         <div>
                                             <span class="currency-number">
                                                 <span class="dollar-sign">R</span>
-                                                <span class="dollar-amount">170.99</span>
+                                                <span class="dollar-amount">0.00</span>
                                             </span>
                                         </div>
                                     </td>
@@ -78,7 +75,7 @@
                                         <div>
                                             <span class="currency-number">
                                                 <span class="dollar-sign">R</span>
-                                                <span class="dollar-amount">0.84</span>
+                                                <span class="dollar-amount">0.00</span>
                                             </span>
                                         </div>
                                     </td>
@@ -89,7 +86,7 @@
                                         <div>
                                             <span class="currency-number">
                                                 <span class="dollar-sign">R</span>
-                                                <span class="dollar-amount">171.83</span>
+                                                <span class="dollar-amount">0.00</span>
                                             </span>
                                         </div>
                                     </td>
@@ -104,25 +101,17 @@
                     <div class="billing-summary-graph-container"></div>
                 </div>
                 <div class="usage-container">
+                    <!-- Users -->
                     <div class="margin-top">
                         <div class="billing-usage-group-table">
                             <table>
                                 <thead>
                                     <tr class="headers border-bottom">
-                                        <th class="usage-group-heading">
-                                            Users
-                                        </th>
-                                        <th>
-                                            Qty
-                                        </th>
-                                        <th class="unit-of-measure">
-                                        </th>
-                                        <th>
-                                            Rate
-                                        </th>
-                                        <th>
-                                            Total
-                                        </th>
+                                        <th class="usage-group-heading">Users</th>
+                                        <th>Qty</th>
+                                        <th class="unit-of-measure"></th>
+                                        <th>Rate</th>
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody id="users-tbody">
@@ -131,25 +120,18 @@
                         </div>
                     </div>
                     <div class="margin-top"></div>
+
+                    <!-- Apps -->
                     <div class="margin-top">
                         <div class="billing-usage-group-table">
                             <table>
                                 <thead>
                                     <tr class="headers border-bottom">
-                                        <th class="usage-group-heading">
-                                            Apps
-                                        </th>
-                                        <th>
-                                            Qty
-                                        </th>
-                                        <th class="unit-of-measure">
-                                        </th>
-                                        <th>
-                                            Rate
-                                        </th>
-                                        <th>
-                                            Total
-                                        </th>
+                                        <th class="usage-group-heading">Apps</th>
+                                        <th>Qty</th>
+                                        <th class="unit-of-measure"></th>
+                                        <th>Rate</th>
+                                        <th>Total</th>
                                     </tr>
                                 </thead>
                                 <tbody id="apps-tbody">
@@ -158,23 +140,19 @@
                         </div>
                     </div>
                     <div class="margin-top"></div>
+
+                    <!-- Devices -->
                     <div class="margin-top">
                         <div class="billing-usage-group-table">
                             <table>
                                 <thead>
                                     <tr class="headers border-bottom">
-                                        <th class="usage-group-heading">
-                                            Devices
-                                        </th>
-                                        <th>
-                                            Qty
-                                        </th>
-                                        <th class="unit-of-measure">
-                                        </th>
-                                        <th>
-                                        </th>
-                                        <th>
-                                        </th>
+                                        <th class="usage-group-heading">Devices</th>
+                                        <th>Qty</th>
+                                        <th class="unit-of-measure"></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="devices-tbody">
@@ -183,6 +161,8 @@
                         </div>
                     </div>
                     <div class="margin-top"></div>
+
+                    <!-- Resources -->
                     <div class="margin-top">
                         <div class="ember-view">
                             <div class="billing-usage-group ember-view">
@@ -207,6 +187,8 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- FAQ Link -->
                 <div class="faq">
                     <div class="display inline ember-view"><a href="https://help.mypurecloud.com/?p=42316" target="_blank" rel="noopener noreferrer">FAQ</a>
                     </div>
@@ -218,7 +200,7 @@
 </body>
 
 <!-- #region Required Scripts -->
-<script src="https://sdk-cdn.mypurecloud.com/javascript/60.0.0/purecloud-platform-client-v2.min.js"></script>
+<script src="https://sdk-cdn.mypurecloud.com/javascript/69.1.0/purecloud-platform-client-v2.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -229,22 +211,25 @@
 <script type="text/javascript" src="testData.js"></script>
 <script type="text/javascript">
 
+    //TODO How to get 'R' instead of 'ZAR'?
+
     //#region Requires & Settings
     const platformClient = require('platformClient');
 
     const client = platformClient.ApiClient.instance;
     client.setEnvironment('mypurecloud.ie');
 
-    const clientId = '1db38a1e-2398-4435-91f6-d51493e17e23';
+    const clientId = '9a1fd66e-13fc-47e0-997d-4a96e5dcf9bf';
     const redirectUri = 'http://127.0.0.1:5500/index.html';
-    const state = 'CONNECTED';
-    const trustorOrgId = 'd3fc6ba5-80a5-45a9-b6f1-cf827445de08';
+    const state = ''; // Can contain extra information during the login process that will be passed back in the redirect_uri
+    const trustorOrgId = 'd3fc6ba5-80a5-45a9-b6f1-cf827445de08'; //CCBASA
     const billingPeriodIndex = 2; // Number | 0 for active period (overview data may change until period closes). 1 for prior completed billing period. 2 for two billing cycles prior, and so on.
     const useTestData = false;
 
     //#endregion
 
     let apiInstance = new platformClient.BillingApi();
+
     start();
 
     function start() {
@@ -277,7 +262,6 @@
     }
 
     function showData(data) {
-        //console.log(`getBillingTrusteebillingoverviewTrustorOrgId success! data: ${JSON.stringify(data, null, 2)}`);
 
         //#region Billing Summary
 
@@ -287,6 +271,11 @@
         $("#contractedAmount").text(sumProperty(data.usages, 'user-license', 'prepayQuantity', false));
 
         //#endregion
+
+        console.log('Data:', data);
+
+        $("#dateRange").text(`(${moment.utc(data.billingPeriodStartDate).format('L')}-${moment.utc(data.billingPeriodEndDate).format('L')})`);
+        let currency = data.currency;
 
         //#region Users
 
@@ -302,7 +291,10 @@
                 return 1;
             return 0;
         });
+
         $.each(userUsage, (i, usage) => {
+
+            console.log('Usage for user-license:', usage);
             // Row
             let tr = $("<tr/>", { class: 'usage-item td-padding-top bold-table-data' }).appendTo('#users-tbody');
 
@@ -320,38 +312,39 @@
             $("<td/>", {}).appendTo(tr);
 
             // Total
-            let totalTd = $("<td/>", {}).appendTo(tr);
-            let totalSpan = $("<span/>", { class: "currency-number" }).appendTo(totalTd);
-            $("<span/>", { class: "dollar-sign" }).text(usage.currency || "").appendTo(totalSpan);
-            $("<span/>", { class: "dollar-sign" }).text(Math.max(usage.prepayPrice, usage.overagePrice).toFixed(2) || 0.00).appendTo(totalSpan);
+            $("<td/>", {}).appendTo(tr);
 
             //#region Contracted Seats
 
+            let contractedSeatsTitle = '- Contracted Seats';
+            let contractedSeatsQuantity = Math.max(0, usage.prepayQuantity);
+            let contractedSeatsRate = parseFloat(usage.usageQuantity > 0 ? usage.prepayPrice / usage.usageQuantity : "0").toFixed(2);
+            let contractedSeatsTotal = parseFloat(contractedSeatsQuantity * contractedSeatsRate).toFixed(2);
+
+            // Row
             let contractedSeatsTr = $("<tr/>", { class: "roll-up-item" }).appendTo("#users-tbody");
 
             // Name
             let contractedSeatsTd = $("<td/>").appendTo(contractedSeatsTr);
-            $("<span/>").text('- Contracted Seats').appendTo(contractedSeatsTd);
+            $("<span/>").text(contractedSeatsTitle).appendTo(contractedSeatsTd);
 
             // Quantity
-            $("<td/>").text(usage.prepayQuantity).appendTo(contractedSeatsTr);
+            $("<td/>").text(contractedSeatsQuantity).appendTo(contractedSeatsTr);
 
-            // Unit of measure
+            // Unit of measure (none here)
             $("<td/>").appendTo(contractedSeatsTr);
 
             // Rate
             let contractedSeatsRateTd = $("<td/>").appendTo(contractedSeatsTr);
             let contractedSeatsRateSpan = $("<span/>", { class: "currency-number" }).appendTo(contractedSeatsRateTd);
-            //TODO How to get 'R' instead of 'ZAR'?
-            $("<span/>", { class: "dollar-sign" }).text(data.currency).appendTo(contractedSeatsRateSpan);
-            $("<span/>", { class: "dollar-amount" }).text(parseFloat(usage.usageQuantity > 0 ? usage.prepayPrice / usage.usageQuantity : "0").toFixed(2)).appendTo(contractedSeatsRateSpan);
+            $("<span/>", { class: "dollar-sign" }).text(currency).appendTo(contractedSeatsRateSpan);
+            $("<span/>", { class: "dollar-amount" }).text(contractedSeatsRate).appendTo(contractedSeatsRateSpan);
 
             // Total
             let contractedSeatsTotalTd = $("<td/>").appendTo(contractedSeatsTr);
             let contractedSeatsTotalSpan = $("<span/>", { class: "currency-number" }).appendTo(contractedSeatsTotalTd);
-            //TODO How to get 'R' instead of 'ZAR'?
-            $("<span/>", { class: "dollar-sign" }).text(data.currency).appendTo(contractedSeatsTotalSpan);
-            $("<span/>", { class: "dollar-amount" }).text(parseFloat(usage.prepayPrice).toFixed(2)).appendTo(contractedSeatsTotalSpan);
+            $("<span/>", { class: "dollar-sign" }).text(currency).appendTo(contractedSeatsTotalSpan);
+            $("<span/>", { class: "dollar-amount" }).text(contractedSeatsTotal).appendTo(contractedSeatsTotalSpan);
 
             // Pre-Paid
             $("<td/>", { class: "pre-paid" }).text("Pre-Paid").appendTo(contractedSeatsTr);
@@ -360,30 +353,35 @@
 
             //#region Overage Seats
 
+            let overageSeatsTitle = '- Overage Seats';
+            let overageSeatsQuantity = Math.max(0, usage.usageQuantity - usage.prepayQuantity);
+            let overageSeatsRate = parseFloat(usage.overagePrice + usage.prepayPrice).toFixed(2);
+            let overageSeatsTotal = parseFloat(overageSeatsQuantity * overageSeatsRate).toFixed(2);
+
+            // Row
             let overageSeatsTr = $("<tr/>", { class: "roll-up-item border-bottom td-padding-bottom" }).appendTo("#users-tbody");
 
-            // Name
+            // Title
             let overageSeatsTd = $("<td/>").appendTo(overageSeatsTr);
-            $("<span/>").text('- Overage Seats').appendTo(overageSeatsTd);
+            $("<span/>").text(overageSeatsTitle).appendTo(overageSeatsTd);
 
             // Quantity
-            let overageQuantity = Math.max(0, usage.usageQuantity - usage.prepayQuantity);
-            $("<td/>").text(overageQuantity).appendTo(overageSeatsTr);
+            $("<td/>").text(overageSeatsQuantity).appendTo(overageSeatsTr);
 
-            // Unit of measure
+            // Unit of measure (none here)
             $("<td/>").appendTo(overageSeatsTr);
 
             // Rate
             let overageSeatsRateTd = $("<td/>").appendTo(overageSeatsTr);
             let overageSeatsRateSpan = $("<span/>", { class: "currency-number" }).appendTo(overageSeatsRateTd);
-            $("<span/>", { class: "dollar-sign" }).text(data.currency).appendTo(overageSeatsRateSpan); //TODO How to get 'R' instead of 'ZAR'?
-            $("<span/>", { class: "dollar-amount" }).text(parseFloat(overageQuantity > 0 ? usage.overagePrice / overageQuantity : "0").toFixed(2)).appendTo(overageSeatsRateSpan);
+            $("<span/>", { class: "dollar-sign" }).text(currency).appendTo(overageSeatsRateSpan);
+            $("<span/>", { class: "dollar-amount" }).text(overageSeatsRate).appendTo(overageSeatsRateSpan);
 
             // Total
             let overageSeatsTotalTd = $("<td/>").appendTo(overageSeatsTr);
             let overageSeatsTotalSpan = $("<span/>", { class: "currency-number" }).appendTo(overageSeatsTotalTd);
-            $("<span/>", { class: "dollar-sign" }).text(data.currency).appendTo(overageSeatsTotalSpan); //TODO How to get 'R' instead of 'ZAR'?
-            $("<span/>", { class: "dollar-amount" }).text(parseFloat(usage.overagePrice - usage.prepayPrice).toFixed(2)).appendTo(overageSeatsTotalSpan);
+            $("<span/>", { class: "dollar-sign" }).text(currency).appendTo(overageSeatsTotalSpan);
+            $("<span/>", { class: "dollar-amount" }).text(overageSeatsTotal).appendTo(overageSeatsTotalSpan);
 
             //#endregion
 
@@ -405,15 +403,20 @@
                 return 1;
             return 0;
         });
+
         $.each(appsUsage, (i, usage) => {
+
+            let appName = usage.name;
+            let appQuantity = usage.usageQuantity;
+
             // Row
             let tr = $("<tr/>", { class: 'usage-item td-padding-top bold-table-data' }).appendTo('#apps-tbody');
 
             // Name
-            $("<td/>", {}).text(usage.name).appendTo(tr);
+            $("<td/>", {}).text(appName).appendTo(tr);
 
             // Qty
-            $("<td/>", {}).text(usage.usageQuantity).appendTo(tr);
+            $("<td/>", {}).text(appQuantity).appendTo(tr);
 
             // Unit of measure
             let unitOfMeasureTd = $("<td/>", {}).appendTo(tr);
@@ -423,21 +426,24 @@
             $("<td/>", {}).appendTo(tr);
 
             // Total
-            let totalTd = $("<td/>", {}).appendTo(tr);
-            let totalSpan = $("<span/>", { class: "currency-number" }).appendTo(totalTd);
-            $("<span/>", { class: "dollar-sign" }).text(usage.currency || "").appendTo(totalSpan);
-            $("<span/>", { class: "dollar-amount" }).text(Math.max(usage.prepayPrice, usage.overagePrice).toFixed(2) || 0.00).appendTo(totalSpan);
+            $("<td/>", {}).appendTo(tr);
 
             //#region Contracted Seats
 
+            let appContractedSeatsTitle = '- Contracted Seats';
+            let appContractedSeatsQuantity = Math.max(0, usage.prepayQuantity);
+            let appContractedSeatsRate = parseFloat(usage.usageQuantity > 0 ? usage.prepayPrice / usage.usageQuantity : "0").toFixed(2);
+            let appContractedSeatsTotal = parseFloat(appContractedSeatsQuantity * appContractedSeatsRate).toFixed(2);
+
+            // Row
             let contractedSeatsTr = $("<tr/>", { class: "roll-up-item" }).appendTo("#apps-tbody");
 
             // Name
             let contractedSeatsTd = $("<td/>").appendTo(contractedSeatsTr);
-            $("<span/>").text('- Contracted Seats').appendTo(contractedSeatsTd);
+            $("<span/>").text(appContractedSeatsTitle).appendTo(contractedSeatsTd);
 
             // Quantity
-            $("<td/>").text(usage.prepayQuantity).appendTo(contractedSeatsTr);
+            $("<td/>").text(appContractedSeatsQuantity).appendTo(contractedSeatsTr);
 
             // Unit of measure
             $("<td/>").appendTo(contractedSeatsTr);
@@ -445,16 +451,14 @@
             // Rate
             let contractedSeatsRateTd = $("<td/>").appendTo(contractedSeatsTr);
             let contractedSeatsRateSpan = $("<span/>", { class: "currency-number" }).appendTo(contractedSeatsRateTd);
-            //TODO How to get 'R' instead of 'ZAR'?
-            $("<span/>", { class: "dollar-sign" }).text(data.currency).appendTo(contractedSeatsRateSpan);
-            $("<span/>", { class: "dollar-amount" }).text(parseFloat(usage.usageQuantity > 0 ? usage.prepayPrice / usage.usageQuantity : "0").toFixed(2)).appendTo(contractedSeatsRateSpan);
+            $("<span/>", { class: "dollar-sign" }).text(currency).appendTo(contractedSeatsRateSpan);
+            $("<span/>", { class: "dollar-amount" }).text(appContractedSeatsRate).appendTo(contractedSeatsRateSpan);
 
             // Total
             let contractedSeatsTotalTd = $("<td/>").appendTo(contractedSeatsTr);
             let contractedSeatsTotalSpan = $("<span/>", { class: "currency-number" }).appendTo(contractedSeatsTotalTd);
-            //TODO How to get 'R' instead of 'ZAR'?
-            $("<span/>", { class: "dollar-sign" }).text(data.currency).appendTo(contractedSeatsTotalSpan);
-            $("<span/>", { class: "dollar-amount" }).text(parseFloat(usage.prepayPrice).toFixed(2)).appendTo(contractedSeatsTotalSpan);
+            $("<span/>", { class: "dollar-sign" }).text(currency).appendTo(contractedSeatsTotalSpan);
+            $("<span/>", { class: "dollar-amount" }).text(appContractedSeatsTotal).appendTo(contractedSeatsTotalSpan);
 
             // Pre-Paid
             $("<td/>", { class: "pre-paid" }).text("Pre-Paid").appendTo(contractedSeatsTr);
@@ -463,15 +467,20 @@
 
             //#region Overage Seats
 
+            let appOverageSeatsTitle = '- Overage Seats';
+            let appOverageSeatsQuantity = Math.max(0, usage.usageQuantity - usage.prepayQuantity);
+            let appOverageSeatsRate = parseFloat(appOverageSeatsQuantity > 0 ? usage.overagePrice / appOverageSeatsQuantity : "0").toFixed(2);
+            let appOverageSeatsTotal = parseFloat(appOverageSeatsQuantity * appOverageSeatsRate).toFixed(2);
+
+            // Row
             let overageSeatsTr = $("<tr/>", { class: "roll-up-item border-bottom td-padding-bottom" }).appendTo("#apps-tbody");
 
             // Name
             let overageSeatsTd = $("<td/>").appendTo(overageSeatsTr);
-            $("<span/>").text('- Overage Seats').appendTo(overageSeatsTd);
+            $("<span/>").text(appOverageSeatsTitle).appendTo(overageSeatsTd);
 
             // Quantity
-            let overageQuantity = Math.max(0, usage.usageQuantity - usage.prepayQuantity);
-            $("<td/>").text(overageQuantity).appendTo(overageSeatsTr);
+            $("<td/>").text(appOverageSeatsQuantity).appendTo(overageSeatsTr);
 
             // Unit of measure
             $("<td/>").appendTo(overageSeatsTr);
@@ -479,14 +488,14 @@
             // Rate
             let overageSeatsRateTd = $("<td/>").appendTo(overageSeatsTr);
             let overageSeatsRateSpan = $("<span/>", { class: "currency-number" }).appendTo(overageSeatsRateTd);
-            $("<span/>", { class: "dollar-sign" }).text(data.currency).appendTo(overageSeatsRateSpan); //TODO How to get 'R' instead of 'ZAR'?
-            $("<span/>", { class: "dollar-amount" }).text(parseFloat(overageQuantity > 0 ? usage.overagePrice / overageQuantity : "0").toFixed(2)).appendTo(overageSeatsRateSpan);
+            $("<span/>", { class: "dollar-sign" }).text(currency).appendTo(overageSeatsRateSpan);
+            $("<span/>", { class: "dollar-amount" }).text(appOverageSeatsRate).appendTo(overageSeatsRateSpan);
 
             // Total
             let overageSeatsTotalTd = $("<td/>").appendTo(overageSeatsTr);
             let overageSeatsTotalSpan = $("<span/>", { class: "currency-number" }).appendTo(overageSeatsTotalTd);
-            $("<span/>", { class: "dollar-sign" }).text(data.currency).appendTo(overageSeatsTotalSpan); //TODO How to get 'R' instead of 'ZAR'?
-            $("<span/>", { class: "dollar-amount" }).text(parseFloat(usage.overagePrice - usage.prepayPrice).toFixed(2)).appendTo(overageSeatsTotalSpan);
+            $("<span/>", { class: "dollar-sign" }).text(currency).appendTo(overageSeatsTotalSpan);
+            $("<span/>", { class: "dollar-amount" }).text(appOverageSeatsTotal).appendTo(overageSeatsTotalSpan);
 
             //#endregion
 
@@ -508,19 +517,25 @@
                 return 1;
             return 0;
         });
+
         $.each(devicesUsage, (i, usage) => {
+
+            let deviceTitle = usage.name;
+            let deviceQuantity = usage.usageQuantity;
+
             // Row
             let tr = $("<tr/>", { class: 'usage-item td-padding-top' }).appendTo('#devices-tbody');
 
             // Name
-            $("<td/>", {}).text(usage.name).appendTo(tr);
+            $("<td/>", {}).text(deviceTitle).appendTo(tr);
 
             // Qty
-            $("<td/>", {}).text(usage.usageQuantity).appendTo(tr);
+            $("<td/>", {}).text(deviceQuantity).appendTo(tr);
 
             // Unit of measure
             let unitOfMeasureTd = $("<td/>", {}).appendTo(tr);
             $("<span/>", { class: "unit-of-measure" }).text(usage.unitOfMeasureType + 's').appendTo(unitOfMeasureTd);
+
         });
 
         //#endregion
@@ -538,15 +553,20 @@
                 return 1;
             return 0;
         });
+
         $.each(resourcesUsage, (i, usage) => {
+
+            let resourceTitle = usage.name;
+            let resourceQuantity = usage.usageQuantity;
+
             // Row
             let tr = $("<tr/>", { class: 'usage-item td-padding-top' }).appendTo('#resources-tbody');
 
             // Name
-            $("<td/>", {}).text(usage.name).appendTo(tr);
+            $("<td/>", {}).text(resourceTitle).appendTo(tr);
 
             // Qty
-            $("<td/>", {}).text(usage.usageQuantity).appendTo(tr);
+            $("<td/>", {}).text(resourceQuantity).appendTo(tr);
 
             // Unit of measure
             let unitOfMeasureTd = $("<td/>", {}).appendTo(tr);
@@ -557,7 +577,7 @@
 
         //#region Storage
 
-        let storageUsage = data.usages.filter(usage => usage.grouping === 'storage' && usage.usageQuantity > 0);
+        let storageUsage = data.usages.filter(usage => usage.grouping === 'storage');
         storageUsage.sort(function (a, b) {
             var textA = a.name.toLowerCase();
             var textB = b.name.toLowerCase();
@@ -568,21 +588,33 @@
                 return 1;
             return 0;
         });
+
         $.each(storageUsage, (i, usage) => {
 
+            let storageTitle = 'Storage';
+            let storageTotal = Math.max(usage.prepayPrice, usage.overagePrice).toFixed(2) || 0.00;
+            let storageIncluded = usage.prepayQuantity;
+            let storageUsed = usage.usageQuantity;
+
             // Top section
-            let storageTbody = $("<tbody/>").insertAfter("#resources-tbody");
+            let storageTbody = $("<tbody/>", { id: "storage-tbody" }).insertAfter("#resources-tbody");
             let storageTr = $("<tr/>", { class: "usage-item border-bottom td-padding-top td-padding-bottom bold-table-data" }).appendTo(storageTbody);
-            $("<td/>").text("Storage").appendTo(storageTr);
+            $("<td/>").text(storageTitle).appendTo(storageTr);
+
+            // Name
             $("<td/>").appendTo(storageTr);
+
+            // Qty
             $("<td/>").appendTo(storageTr);
+
+            // Unit of measure
             $("<td/>").appendTo(storageTr);
 
             // Storage Total
             let totalTd = $("<td/>", {}).appendTo(storageTr);
             let totalSpan = $("<span/>", { class: "currency-number" }).appendTo(totalTd);
-            $("<span/>", { class: "dollar-sign" }).text(usage.currency || "").appendTo(totalSpan);
-            $("<span/>", { class: "dollar-amount" }).text(Math.max(usage.prepayPrice, usage.overagePrice).toFixed(2) || 0.00).appendTo(totalSpan);
+            $("<span/>", { class: "dollar-sign" }).text(currency || "").appendTo(totalSpan);
+            $("<span/>", { class: "dollar-amount" }).text(storageTotal).appendTo(totalSpan);
 
             $("<td/>").appendTo(storageTr);
 
@@ -592,17 +624,17 @@
             $("<td/>").text("Included").appendTo(storageIncludedTr);
 
             // Amount
-            $("<td/>").text(usage.prepayQuantity).appendTo(storageIncludedTr);
+            $("<td/>").text(storageIncluded).appendTo(storageIncludedTr);
 
             // Unit of measure
             let unitOfMeasureTd = $("<td/>").appendTo(storageIncludedTr);
             $("<span/>", { class: "unit-of-measure" }).text(usage.unitOfMeasureType.toUpperCase()).appendTo(unitOfMeasureTd);
 
             // Rate
-            if (usage.usageQuantity > usage.prepayQuantity) {
+            if (storageUsed > storageIncluded) {
                 let rateTd = $("<td/>").appendTo(storageIncludedTr);
                 let rateSpan = $("<span/>", { class: "currency-number" }).appendTo(rateTd);
-                $("<span/>", { class: "dollar-sign" }).text(data.currency || "").appendTo(rateSpan);
+                $("<span/>", { class: "dollar-sign" }).text(currency || "").appendTo(rateSpan);
                 $("<span/>", { class: "dollar-amount" }).text(Math.max(usage.prepayPrice, usage.overagePrice).toFixed(2) || 0.00).appendTo(rateSpan);
             } else {
                 $("<td/>", { class: "pre-paid" }).text("Included").appendTo(storageIncludedTr);
@@ -680,10 +712,11 @@
     }
 
     $("#selectPeriod").on('change', () => {
-        $("#usersTableBody").empty();
-        $("#appsTableBody").empty();
-        $("#resourcesTableBody").empty();
-        $("#storageTableBody").empty();
+        $("#users-tbody").empty();
+        $("#apps-tbody").empty();
+        $("#devices-tbody").empty();
+        $("#resources-tbody").empty();
+        $("#storage-tbody").empty();
 
         start();
     });
