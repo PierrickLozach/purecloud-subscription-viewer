@@ -213,52 +213,46 @@
 
     //TODO How to get 'R' instead of 'ZAR'?
 
-    //#region Requires & Settings
-    const platformClient = require('platformClient');
-
-    const client = platformClient.ApiClient.instance;
-    client.setEnvironment('mypurecloud.ie');
+    //#region Settings
 
     const clientId = '9a1fd66e-13fc-47e0-997d-4a96e5dcf9bf';
-    const redirectUri = 'http://127.0.0.1:5500/index.html';
-    const state = ''; // Can contain extra information during the login process that will be passed back in the redirect_uri
+    const redirectUri = window.location.href; // 'http://127.0.0.1:5500/index.html';
     const trustorOrgId = 'd3fc6ba5-80a5-45a9-b6f1-cf827445de08'; //CCBASA
-    const billingPeriodIndex = 2; // Number | 0 for active period (overview data may change until period closes). 1 for prior completed billing period. 2 for two billing cycles prior, and so on.
-    const useTestData = false;
+    const environment = 'mypurecloud.ie';
 
     //#endregion
 
+    const platformClient = require('platformClient');
+
+    const client = platformClient.ApiClient.instance;
+    client.setEnvironment(environment);
     let apiInstance = new platformClient.BillingApi();
 
     start();
 
     function start() {
-        if (!useTestData) {
-            client.loginImplicitGrant(clientId, redirectUri, { state: state })
-                .then((data) => {
-                    console.log('Logged In!');
+        client.loginImplicitGrant(clientId, redirectUri, { state: undefined })
+            .then((data) => {
+                console.log('Logged In!');
 
-                    let opts = {
-                        'billingPeriodIndex': $("#selectPeriod").val()
-                    };
+                let opts = {
+                    'billingPeriodIndex': $("#selectPeriod").val()
+                };
 
-                    apiInstance.getBillingTrusteebillingoverviewTrustorOrgId(trustorOrgId, opts)
-                        .then((data) => {
-                            showData(data);
-                        })
-                        .catch((err) => {
-                            console.log('There was a failure calling getBillingTrusteebillingoverviewTrustorOrgId');
-                            console.error(err);
-                        });
-                })
-                .catch((err) => {
-                    // Handle failure response
-                    console.error(err);
-                    alert(err);
-                });
-        } else {
-            showData(testData);
-        }
+                apiInstance.getBillingTrusteebillingoverviewTrustorOrgId(trustorOrgId, opts)
+                    .then((data) => {
+                        showData(data);
+                    })
+                    .catch((err) => {
+                        console.log('There was a failure calling getBillingTrusteebillingoverviewTrustorOrgId');
+                        console.error(err);
+                    });
+            })
+            .catch((err) => {
+                // Handle failure response
+                console.error(err);
+                alert(err);
+            });
     }
 
     function showData(data) {
@@ -294,7 +288,6 @@
 
         $.each(userUsage, (i, usage) => {
 
-            console.log('Usage for user-license:', usage);
             // Row
             let tr = $("<tr/>", { class: 'usage-item td-padding-top bold-table-data' }).appendTo('#users-tbody');
 
