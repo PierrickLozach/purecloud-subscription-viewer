@@ -584,7 +584,8 @@
         $.each(storageUsage, (i, usage) => {
 
             let storageTitle = 'Storage';
-            let storageTotal = Math.max(usage.prepayPrice, usage.overagePrice).toFixed(2) || 0.00;
+            console.log(usage);
+            let storageTotal = usage.usageQuantity > usage.prepayQuantity ? ((usage.usageQuantity - usage.prepayQuantity) * overagePrice).toFixed(2) : "0.00";
             let storageIncluded = usage.prepayQuantity;
             let storageUsed = usage.usageQuantity;
 
